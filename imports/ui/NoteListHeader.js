@@ -14,7 +14,7 @@ export const NoteListHeader = (props) => {
     )
 }
 
-NoteListItem.propTypes = {
+NoteListHeader.propTypes = {
     meteorCall: PropTypes.func.isRequired
 }
 
