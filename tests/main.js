@@ -1,20 +1,20 @@
-import assert from "assert";
 
-describe("short-lnk", function () {
-  it("package.json has correct name", async function () {
-    const { name } = await import("../package.json");
-    assert.strictEqual(name, "short-lnk");
-  });
+// import { Meteor } from "meteor/meteor";
+// import expect from "expect";
 
-  if (Meteor.isClient) {
-    it("client is not server", function () {
-      assert.strictEqual(Meteor.isServer, false);
-    });
-  }
+// import { validateNewUser } from "./../imports/api/users";
 
-  if (Meteor.isServer) {
-    it("server is not client", function () {
-      assert.strictEqual(Meteor.isClient, false);
-    });
-  }
-});
+// describe('users', function () {
+//   it('should allow valid email address', function () {
+//     const user = {
+//       emails: [
+//         {
+//           address: 'test@example.com'
+//         }
+//       ]
+//     };
+
+//     const res = validateNewUser(user);
+//     expect(res).toBeTruthy();
+//   });
+// });
