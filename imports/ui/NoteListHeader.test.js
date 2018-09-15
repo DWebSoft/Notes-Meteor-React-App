@@ -12,7 +12,7 @@ if (Meteor.isClient) {
             const spy = expect.createSpy();
             const wrapper = mount(<NoteListHeader meteorCall={spy}/>);
             wrapper.find('button').simulate('click');
-            console.log(spy);
+            //console.log(spy);
             expect(spy).toHaveBeenCalledWith('notes.insert');
         });
 

@@ -46,7 +46,8 @@ export const AppRouter = (
         <Switch>
             <Route exact path="/" render={() => onEnterPublicPage(Login)}/>
             <Route exact path="/signup" render={() => onEnterPublicPage(Signup)}/>
-            <Route exact path="/dashboard" render={() => onEnterPrivatePage(Dashboard)}/>
+            <Route exact path="/dashboard" render={() => onEnterPrivatePage(Dashboard)} />
+            <Route path="/dashboard/:id" render={() => onEnterPrivatePage(Dashboard)}/>
             <Route path="*" component={NotFound} />
         </Switch>
     </Router>

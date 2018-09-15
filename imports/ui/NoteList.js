@@ -14,7 +14,6 @@ export const NoteList = (props) => {
             return <NoteListEmptyItem/>;
         }
         return props.notes.map((note) => {
-            console.log(note);
             return <NoteListItem key={note._id} note={note}/>
         });
     }

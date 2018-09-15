@@ -2,27 +2,37 @@ import React from "react";
 import { Meteor } from "meteor/meteor";
 import { mount } from "enzyme";
 import expect from "expect";
-
 import moment from 'moment';
 
-import NoteListItem from "./NoteListItem";
+import { notes } from "../fixtures/fixtures";
+import { NoteListItem } from "./NoteListItem";
 
 if( Meteor.isClient ){
     describe('NoteListItem', () => {
-        it('should render title and timestamp', () => {
-            const title = "This is the title";
-            const timestamp = 1534844011939;
-            const wrapper = mount(<NoteListItem note={{ title, timestamp }} />);
+        let Session;
+        beforeEach(() => {
+            Session = {
+                set: expect.createSpy()
+            };
+        });
 
-            expect(wrapper.find('h5').text()).toBe(title);
-            expect(wrapper.find('p').text()).toBe(moment(timestamp).format('M/DD/YY'));
+        it('should render title and timestamp', () => {
+            const wrapper = mount(<NoteListItem note={notes[0]} Session={Session}/>);
+
+            expect(wrapper.find('h5').text()).toBe(notes[0].title);
+            expect(wrapper.find('p').text()).toBe(moment(notes[0].updatedAt).format('M/DD/YY'));
         });
 
         it('should set default title if not title set', () => {
-            const timestamp = 1534844011939;
-            const wrapper = mount(<NoteListItem note={{ timestamp }} />);
+            const wrapper = mount(<NoteListItem note={notes[1]} Session={Session}/>);
 
             expect(wrapper.find('h5').text()).toBe('Untitled note');
+        });
+
+        it('should set on click',() => {
+            const wrapper = mount(<NoteListItem note={notes[1]} Session={Session} />);
+            wrapper.find('div').simulate('click');
+            expect(Session.set).toHaveBeenCalledWith('selectedNoteId', notes[1]._id);
         });
     });
 }
