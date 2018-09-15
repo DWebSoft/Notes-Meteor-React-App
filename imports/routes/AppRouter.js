@@ -2,6 +2,7 @@ import React from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Meteor } from "meteor/meteor";
+import { Session } from "meteor/session";
 
 import Signup from "./../ui/Signup";
 import Login from "./../ui/Login";
@@ -41,13 +42,22 @@ const onEnterPrivatePage = (Component) => {
     }
 }
 
+const onEnterNotesPage = (Component, params) => {
+    if (!Meteor.userId()) {
+        return <Redirect to="/" />
+    } else {
+        Session.set('selectedNoteId', params.id);
+        return <Component />
+    }
+}
+
 export const AppRouter = (
     <Router history={history}>
         <Switch>
             <Route exact path="/" render={() => onEnterPublicPage(Login)}/>
             <Route exact path="/signup" render={() => onEnterPublicPage(Signup)}/>
             <Route exact path="/dashboard" render={() => onEnterPrivatePage(Dashboard)} />
-            <Route path="/dashboard/:id" render={() => onEnterPrivatePage(Dashboard)}/>
+            <Route path="/dashboard/:id" render={(props) => onEnterNotesPage(Dashboard, props.match.params)}/>
             <Route path="*" component={NotFound} />
         </Switch>
     </Router>
